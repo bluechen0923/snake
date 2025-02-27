@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>贪吃蛇游戏</h1>
+        <div class="control-panel">
+            <div class="score-panel">
+                <div class="score-container">分数：<span id="score">0</span></div>
+                <div class="high-score-container">最高分：<span id="highScore">0</span></div>
+                <div class="level-container">当前等级：<span id="level">1</span></div>
+            </div>
+            <select id="difficulty">
+                <option value="200">简单</option>
+                <option value="150">中等</option>
+                <option value="100">困难</option>
+            </select>
+            <button id="startBtn">开始新游戏</button>
+            <button id="pauseBtn">暂停</button>
+            <button id="soundBtn">声音：开</button>
+        </div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="food-legend">
+            <h3>食物说明：</h3>
+            <div class="food-types">
+                <div class="food-item">
+                    <div class="food-icon normal"></div>
+                    <span>普通食物 - 得分+1</span>
+                </div>
+                <div class="food-item">
+                    <div class="food-icon star"></div>
+                    <span>星星食物 - 得分+3，长度+3</span>
+                </div>
+                <div class="food-item">
+                    <div class="food-icon speed"></div>
+                    <span>闪电食物 - 临时提速</span>
+                </div>
+                <div class="food-item">
+                    <div class="food-icon rainbow"></div>
+                    <span>彩虹食物 - 双倍得分</span>
+                </div>
+                <div class="food-item">
+                    <div class="food-icon small"></div>
+                    <span>缩小食物 - 缩短长度</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 添加成就面板 -->
+        <div class="achievements-panel">
+            <h3>成就系统：</h3>
+            <div class="achievements-list">
+                <div class="achievement" id="ach-beginner">
+                    <div class="achievement-icon locked">🔒</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">初出茅庐</div>
+                        <div class="achievement-desc">达到3级</div>
+                    </div>
+                </div>
+                <div class="achievement" id="ach-intermediate">
+                    <div class="achievement-icon locked">🔒</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">小有成就</div>
+                        <div class="achievement-desc">达到5级</div>
+                    </div>
+                </div>
+                <div class="achievement" id="ach-expert">
+                    <div class="achievement-icon locked">🔒</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">登峰造极</div>
+                        <div class="achievement-desc">达到10级</div>
+                    </div>
+                </div>
+                <div class="achievement" id="ach-scorer">
+                    <div class="achievement-icon locked">🔒</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">得分王者</div>
+                        <div class="achievement-desc">获得50分</div>
+                    </div>
+                </div>
+                <div class="achievement" id="ach-collector">
+                    <div class="achievement-icon locked">🔒</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">美食收集者</div>
+                        <div class="achievement-desc">吃到所有类型的食物</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html> 

@@ -1,0 +1,277 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.score-container {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#gameCanvas {
+    border: 2px solid #333;
+    background-color: #146B3A;
+}
+
+.control-panel {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.score-panel {
+    display: flex;
+    gap: 20px;
+}
+
+.high-score-container {
+    font-size: 20px;
+}
+
+.food-legend {
+    margin-top: 20px;
+    text-align: left;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.food-legend h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.food-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.food-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.food-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.food-icon.normal {
+    background-color: #ff0000;
+    border-radius: 50%;
+}
+
+.food-icon.star {
+    background-color: #FFD700;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.food-icon.speed {
+    background-color: #00ffff;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    transform: rotate(90deg);
+}
+
+.food-icon.rainbow {
+    background: linear-gradient(45deg, 
+        #ff0000, #ff8000, 
+        #ffff00, #00ff00,
+        #00ffff, #0000ff, 
+        #8000ff, #ff00ff);
+    border-radius: 50%;
+}
+
+.food-icon.small {
+    background-color: #32CD32;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    transform: rotate(180deg);
+}
+
+.food-item span {
+    color: #333;
+    font-size: 14px;
+}
+
+/* 成就面板样式 */
+.achievements-panel {
+    margin-top: 20px;
+    text-align: left;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.achievements-panel h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.achievements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.achievement:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+.achievement-icon.locked {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.achievement-icon.unlocked {
+    opacity: 1;
+    filter: none;
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    color: white;
+    animation: shine 2s infinite;
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-name {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.achievement-desc {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 成就解锁动画 */
+@keyframes shine {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 成就解锁时的弹出提示 */
+.achievement-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.5s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
+    z-index: 1000;
+}
+
+.achievement-popup .icon {
+    font-size: 24px;
+}
+
+.achievement-popup .text {
+    display: flex;
+    flex-direction: column;
+}
+
+.achievement-popup .title {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+/* 弹出动画 */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+} 
