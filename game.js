@@ -74,6 +74,13 @@ class Game {
                 color: '#32CD32',
                 duration: 0,
                 effect: 'shrink'
+            },
+            bomb: {
+                chance: 0.05, // 5% 概率
+                score: -5, // 吃到会扣分
+                color: '#000000', // 黑色
+                duration: 0,
+                effect: 'none'
             }
         };
         
@@ -175,6 +182,14 @@ class Game {
         
         // 从本地存储加载成就状态
         this.loadAchievements();
+        
+        this.difficultyLevels = {
+            easy: 200,
+            medium: 150,
+            hard: 100,
+            extreme: 50, // 新增极难
+            endless: 0   // 新增无尽模式
+        };
         
         this.init();
     }
@@ -612,7 +627,7 @@ class Game {
 
         // 难度选择
         document.getElementById('difficulty').addEventListener('change', (e) => {
-            this.speed = parseInt(e.target.value);
+            this.speed = this.difficultyLevels[e.target.value] || this.baseSpeed;
             if (this.gameLoop) {
                 clearInterval(this.gameLoop);
                 this.gameLoop = setInterval(() => this.update(), this.speed);
@@ -748,21 +763,22 @@ class Game {
             Math.floor(this.score / this.pointsPerLevel) + 1,
             this.maxLevel
         );
-        
+
         if (newLevel !== this.level) {
             this.level = newLevel;
             this.updateLevel();
-            
-            // 计算新速度
-            const speedMultiplier = Math.pow(this.speedIncreaseRate, this.level - 1);
-            this.speed = this.baseSpeed * speedMultiplier;
-            
-            // 更新游戏循环
-            if (this.gameLoop) {
-                clearInterval(this.gameLoop);
-                this.gameLoop = setInterval(() => this.update(), this.speed);
+
+            // 动态调整速度
+            if (this.speed > 0) { // 只有在非无尽模式下调整速度
+                const speedMultiplier = Math.pow(this.speedIncreaseRate, this.level - 1);
+                this.speed = this.baseSpeed * speedMultiplier;
+
+                // 更新游戏循环
+                if (this.gameLoop) {
+                    clearInterval(this.gameLoop);
+                    this.gameLoop = setInterval(() => this.update(), this.speed);
+                }
             }
-            
             // 显示等级提升提示
             this.showLevelUpMessage();
         }
@@ -1075,6 +1091,17 @@ class Game {
     checkAllFoodTypesEaten() {
         const allFoodTypes = Object.keys(this.foodTypes);
         return allFoodTypes.every(type => this.eatenFoodTypes.has(type));
+    }
+
+    /**
+     * @method draw
+     * @description 绘制游戏元素
+     */
+    draw() {
+        this.clearCanvas();
+        this.drawGrid();
+        this.drawSnake();
+        this.drawFood();
     }
 }
 
