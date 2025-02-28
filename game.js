@@ -204,6 +204,7 @@ class Game {
         this.drawSnake();
         this.drawFood();
         this.updateScore();
+        this.bindTouchEvents();
     }
 
     /**
@@ -1102,6 +1103,59 @@ class Game {
         this.drawGrid();
         this.drawSnake();
         this.drawFood();
+    }
+
+    /**
+     * @method bindTouchEvents
+     * @description 绑定触摸事件
+     */
+    bindTouchEvents() {
+        const canvas = document.getElementById('gameCanvas');
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // 阻止默认的触摸行为
+            const touch = e.touches[0]; // 获取第一个触摸点
+            this.handleTouch(touch.clientX, touch.clientY);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // 阻止默认的触摸行为
+            const touch = e.touches[0]; // 获取第一个触摸点
+            this.handleTouch(touch.clientX, touch.clientY);
+        });
+    }
+
+    /**
+     * @method handleTouch
+     * @description 处理触摸事件
+     * @param {number} x - 触摸点的 X 坐标
+     * @param {number} y - 触摸点的 Y 坐标
+     */
+    handleTouch(x, y) {
+        const canvasRect = this.canvas.getBoundingClientRect();
+        const touchX = x - canvasRect.left; // 计算触摸点相对于画布的 X 坐标
+        const touchY = y - canvasRect.top; // 计算触摸点相对于画布的 Y 坐标
+
+        // 根据触摸点的位置来改变蛇的方向
+        if (touchY < canvasRect.height / 3) {
+            if (this.snake.direction !== 'down') {
+                this.snake.direction = 'up';
+            }
+        } else if (touchY > canvasRect.height * 2 / 3) {
+            if (this.snake.direction !== 'up') {
+                this.snake.direction = 'down';
+            }
+        } else {
+            if (touchX < canvasRect.width / 2) {
+                if (this.snake.direction !== 'right') {
+                    this.snake.direction = 'left';
+                }
+            } else {
+                if (this.snake.direction !== 'left') {
+                    this.snake.direction = 'right';
+                }
+            }
+        }
     }
 }
 
